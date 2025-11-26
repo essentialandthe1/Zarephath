@@ -8,7 +8,7 @@ export default function HeroSection() {
   return (
 <section
   id="home"
-  className="relative bg-[#F7FAFC] py-25 px-6 lg:px-24"
+  className="relative bg-[#F7FAFC] py-30 px-6 lg:px-24"
 >
   <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
     {/* Left Text */}

@@ -1,6 +1,6 @@
 'use client';
 
-import { FaFacebookF, FaInstagram, FaTiktok } from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaTiktok, FaLinkedinIn} from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -42,16 +42,22 @@ export default function Footer() {
             <a href="https://www.tiktok.com/@zarephath.nigeria?_t=ZM-8z0WdNdV6S0&_r=1" className="hover:text-green-400" aria-label="TikTok">
               <FaTiktok />
             </a>
-            {/*<a href="#" className="hover:text-green-400" aria-label="LinkedIn">
+            <a
+              href="https://www.linkedin.com/in/zarephath-food-nigeria-limited-09045a386?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+              className="hover:text-green-400"
+              aria-label="LinkedIn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaLinkedinIn />
-            </a>*/}
+            </a>
           </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
       <div className="mt-10 border-t border-green-700 pt-6 text-center text-sm text-gray-400">
-        &copy; {new Date().getFullYear()} Zarephath Nigerian Limited. All rights reserved.
+        &copy; {new Date().getFullYear()} Zarephath Nigeria Limited. All rights reserved.
       </div>
     </footer>
   );
