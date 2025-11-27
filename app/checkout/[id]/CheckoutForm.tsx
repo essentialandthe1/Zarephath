@@ -5,13 +5,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { toast } from "sonner";
 import { Loader2, CheckCircle2, AlertTriangle } from "lucide-react";
 
@@ -41,53 +34,31 @@ export default function CheckoutForm({
 
   const validateForm = (): boolean => {
     if (!fullName.trim()) {
-      toast.error("Full name is required", {
-        style: { backgroundColor: "#ef4444", color: "white" },
-        icon: <AlertTriangle className="text-white" />,
-      });
+      toast.error("Full name is required", { style: { backgroundColor: "#ef4444", color: "white" }, icon: <AlertTriangle className="text-white" /> });
       return false;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      toast.error("Valid email is required", {
-        style: { backgroundColor: "#ef4444", color: "white" },
-        icon: <AlertTriangle className="text-white" />,
-      });
+      toast.error("Valid email is required", { style: { backgroundColor: "#ef4444", color: "white" }, icon: <AlertTriangle className="text-white" /> });
       return false;
     }
     if (phone.trim().length < 10) {
-      toast.error("Phone number must be at least 10 digits", {
-        style: { backgroundColor: "#ef4444", color: "white" },
-        icon: <AlertTriangle className="text-white" />,
-      });
+      toast.error("Phone number must be at least 10 digits", { style: { backgroundColor: "#ef4444", color: "white" }, icon: <AlertTriangle className="text-white" /> });
       return false;
     }
     if (!selectedProduct) {
-      console.log("Selected Product is empty:", selectedProduct);
-      toast.error("Please select a product", {
-        style: { backgroundColor: "#ef4444", color: "white" },
-        icon: <AlertTriangle className="text-white" />,
-      });
+      toast.error("No product selected", { style: { backgroundColor: "#ef4444", color: "white" }, icon: <AlertTriangle className="text-white" /> });
       return false;
     }
     if (!quantity.trim()) {
-      toast.error("Quantity is required", {
-        style: { backgroundColor: "#ef4444", color: "white" },
-        icon: <AlertTriangle className="text-white" />,
-      });
+      toast.error("Quantity is required", { style: { backgroundColor: "#ef4444", color: "white" }, icon: <AlertTriangle className="text-white" /> });
       return false;
     }
     if (!method.trim()) {
-      toast.error("Delivery method is required", {
-        style: { backgroundColor: "#ef4444", color: "white" },
-        icon: <AlertTriangle className="text-white" />,
-      });
+      toast.error("Delivery method is required", { style: { backgroundColor: "#ef4444", color: "white" }, icon: <AlertTriangle className="text-white" /> });
       return false;
     }
     if (!address.trim()) {
-      toast.error("Address is required", {
-        style: { backgroundColor: "#ef4444", color: "white" },
-        icon: <AlertTriangle className="text-white" />,
-      });
+      toast.error("Address is required", { style: { backgroundColor: "#ef4444", color: "white" }, icon: <AlertTriangle className="text-white" /> });
       return false;
     }
     return true;
@@ -95,71 +66,33 @@ export default function CheckoutForm({
 
   const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validateForm()) return;
 
     setIsSubmitting(true);
-
     try {
-      console.log("Submitting Order:", {
-        fullName,
-        email,
-        phone,
-        selectedProduct,
-        quantity,
-        method,
-        address,
-        notes,
-      });
       const res = await fetch("/api/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName,
-          email,
-          phone,
-          selectedProduct,
-          quantity,
-          method,
-          address,
-          notes,
-        }),
+        body: JSON.stringify({ fullName, email, phone, selectedProduct, quantity, method, address, notes }),
       });
 
-      if (!res.ok) {
-        console.error("API Response Error:", await res.text());
-        throw new Error("Order submission failed");
-      }
+      if (!res.ok) throw new Error(await res.text());
 
-      console.log("Order Submitted Successfully");
-      toast.success("Order submitted successfully!", {
-        style: { backgroundColor: "#22c55e", color: "white" },
-        icon: <CheckCircle2 className="text-white" />,
-      });
-
-      setFullName("");
-      setEmail("");
-      setPhone("");
-      setSelectedProduct("");
-      setQuantity("");
-      setMethod("");
-      setAddress("");
-      setNotes("");
-      setIsSubmitting(false);
+      toast.success("Order submitted successfully!", { style: { backgroundColor: "#22c55e", color: "white" }, icon: <CheckCircle2 className="text-white" /> });
+      setFullName(""); setEmail(""); setPhone(""); setSelectedProduct(""); setQuantity(""); setMethod(""); setAddress(""); setNotes("");
       setShowThankYouModal(true);
     } catch (error) {
       console.error("Order Submission Error:", error);
-      toast.error("Something went wrong while submitting your order", {
-        style: { backgroundColor: "#ef4444", color: "white" },
-        icon: <AlertTriangle className="text-white" />,
-      });
+      toast.error("Something went wrong while submitting your order", { style: { backgroundColor: "#ef4444", color: "white" }, icon: <AlertTriangle className="text-white" /> });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleWhatsAppOrder = () => {
-  if (!validateForm()) return;
+    if (!validateForm()) return;
 
-  const message = `Hello Zarephath Team! 👋
+    const message = `Hello Zarephath Team! 👋
 
 I'd like to place an order:
 
@@ -174,163 +107,73 @@ I'd like to place an order:
 
 Thank you! 🙏`;
 
-  const phoneNumber = "2348037594488";
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-
-  // FIXED – works everywhere
-  window.location.href = whatsappUrl;
-};
+    const phoneNumber = "2348037594488";
+    window.location.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  };
 
   return (
-    <form
-      onSubmit={handlePlaceOrder}
-      className="space-y-6 bg-white p-6 rounded shadow"
-    >
+    <form onSubmit={handlePlaceOrder} className="space-y-6 bg-white p-6 rounded shadow">
       <div>
-        <Label htmlFor="fullName" className="pb-2">
-          Full Name
-        </Label>
-        <Input
-          id="fullName"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-          placeholder="Enter your full name"
-          required
-        />
+        <Label htmlFor="fullName" className="pb-2">Full Name</Label>
+        <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Enter your full name" required />
       </div>
 
       <div>
-        <Label htmlFor="email" className="pb-2">
-          Email
-        </Label>
-        <Input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          placeholder="Enter your email"
-        />
+        <Label htmlFor="email" className="pb-2">Email</Label>
+        <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required />
       </div>
 
       <div>
-        <Label htmlFor="phone" className="pb-2">
-          Phone Number
-        </Label>
-        <Input
-          id="phone"
-          type="tel"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          required
-          placeholder="Enter your phone number"
-        />
+        <Label htmlFor="phone" className="pb-2">Phone Number</Label>
+        <Input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Enter your phone number" required />
+      </div>
+
+      {/* Product as read-only */}
+      <div>
+        <Label className="pb-2">Product</Label>
+        <Input value={selectedProduct} readOnly className="bg-gray-100 cursor-not-allowed" />
+        <input type="hidden" name="selectedProduct" value={selectedProduct} />
+      </div>
+
+      {/* Quantity as read-only */}
+      <div>
+        <Label className="pb-2">Quantity / Size</Label>
+        <Input value={quantity} readOnly className="bg-gray-100 cursor-not-allowed" />
+        <input type="hidden" name="quantity" value={quantity} />
       </div>
 
       <div>
-        <Label htmlFor="product" className="pb-2">
-          Product
-        </Label>
-        <Select
-          value={selectedProduct}
-          onValueChange={setSelectedProduct}
-          required
-        >
-          <SelectTrigger id="product" className="w-full">
-            <SelectValue placeholder="Select Product" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="Unripe Plantain Flour">
-              Unripe Plantain Flour
-            </SelectItem>
-            <SelectItem value="Red Palm Oil">Red Palm Oil</SelectItem>
-            <SelectItem value="Roasted Peanuts">Roasted Peanuts</SelectItem>
-            <SelectItem value="Yellow and White Unsour Garri">
-              Yellow and White Unsour Garri
-            </SelectItem>
-          </SelectContent>
-        </Select>
+        <Label htmlFor="address" className="pb-2">Delivery/Shipping Address</Label>
+        <Input id="address" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Enter your full delivery/shipping address" required />
       </div>
 
       <div>
-        <Label htmlFor="quantity" className="pb-2">
-          Quantity / Size
-        </Label>
-        <Input
-          id="quantity"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          placeholder="e.g. 2kg or 5 packs"
-          required
-        />
+        <Label htmlFor="method" className="pb-2">Preferred Delivery Method (Pickup / Delivery)</Label>
+        <Input list="methods" value={method} onChange={(e) => setMethod(e.target.value)} placeholder="Pickup or Delivery" required />
+        <datalist id="methods">
+          <option value="pickup" />
+          <option value="delivery" />
+        </datalist>
       </div>
 
       <div>
-        <Label htmlFor="address" className="pb-2">
-          Delivery/Shipping Address
-        </Label>
-        <Input
-          id="address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          required
-          placeholder="Enter your full delivery/shipping address"
-        />
-      </div>
-
-      <div>
-        <Label htmlFor="method" className="pb-2">
-          Preferred Delivery Method (Pickup / Delivery)
-        </Label>
-        <Select value={method} onValueChange={setMethod} required>
-          <SelectTrigger id="method" className="w-full">
-            <SelectValue placeholder="Select Delivery Method" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="pickup">Pickup</SelectItem>
-            <SelectItem value="delivery">Delivery</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div>
-        <Label htmlFor="notes" className="pb-2">
-          Additional Notes (Optional)
-        </Label>
-        <Textarea
-          id="notes"
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          placeholder="Any special requests?"
-        />
+        <Label htmlFor="notes" className="pb-2">Additional Notes (Optional)</Label>
+        <Textarea id="notes" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Any special requests?" />
       </div>
 
       <Button
         type="submit"
-        className="w-full bg-green-700 hover:bg-green-800 text-white text-lg mt-2 flex justify-center items-center cursor-pointer"
+        className="w-full bg-green-700 hover:bg-green-800 text-white text-lg mt-2"
+        disabled={isSubmitting}
       >
-        {isSubmitting ? (
-          <Loader2 className="animate-spin h-5 w-5 mx-auto" />
-        ) : (
-          "Place Your Order Now"
-        )}
+        {isSubmitting ? <Loader2 className="animate-spin h-5 w-5 mx-auto" /> : "Place Your Order Now"}
       </Button>
+
       <p className="text-sm text-black mt-2 font-bold">
-        Or Order via{" "}
-        <span
-          className="text-[#408B69] cursor-pointer hover:underline"
-          onClick={handleWhatsAppOrder}
-        >
-          WhatsApp
-        </span>
+        Or Order via <span className="text-[#408B69] cursor-pointer hover:underline" onClick={handleWhatsAppOrder}>WhatsApp</span>
       </p>
 
-      <Button
-        type="button"
-        variant="outline"
-        onClick={onGoBack}
-        className="w-full border-green-700 text-green-700 hover:bg-green-100 mt-2 cursor-pointer"
-      >
+      <Button type="button" variant="outline" onClick={onGoBack} className="w-full border-green-700 text-green-700 hover:bg-green-100 mt-2 cursor-pointer">
         Cancel & Go Back
       </Button>
     </form>
