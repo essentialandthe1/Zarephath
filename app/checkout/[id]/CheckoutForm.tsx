@@ -157,9 +157,9 @@ export default function CheckoutForm({
   };
 
   const handleWhatsAppOrder = () => {
-    if (!validateForm()) return; // use your existing validation
+  if (!validateForm()) return;
 
-    const message = `Hello Zarephath Team! 👋
+  const message = `Hello Zarephath Team! 👋
 
 I'd like to place an order:
 
@@ -174,9 +174,12 @@ I'd like to place an order:
 
 Thank you! 🙏`;
 
-    const whatsappUrl = `https://wa.me/2348037594488?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, "_blank");
-  };
+  const phoneNumber = "2348037594488";
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+  // FIXED – works everywhere
+  window.location.href = whatsappUrl;
+};
 
   return (
     <form

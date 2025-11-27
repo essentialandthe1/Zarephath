@@ -6,7 +6,7 @@ export const allProducts = [
     description:
       "Made from 100% green plantains, gluten-free, high in dietary fiber, iron, and resistant starch. No preservatives, locally sourced.",
     size: ["500g", "1kg", "2kg"],
-    price: ["₦1,200", "₦2,200", "₦4,200"],
+    price: ["₦3,500", "₦7,000", "₦14,000"],
     rating: 4,
     images: [
       "/assets/products/product-plantain-flour.png",
@@ -23,7 +23,7 @@ export const allProducts = [
     description:
       "Unrefined, locally sourced red palm oil, filtered for impurities, rich in antioxidants (Vitamin E, beta-carotene). No additives.",
     size: ["1L", "2L", "5L"],
-    price: ["₦1,800", "₦3,500", "₦6,800"],
+    price: ["₦4,000", "₦8,000", "₦20,000"],
     rating: 5,
     images: [
       "/assets/products/product-palm-oil.jpeg",
@@ -39,23 +39,11 @@ export const allProducts = [
     description:
       "Sourced from quality cassava, sieved and dried traditionally without fermentation. Yellow variant fortified with palm oil. 100% natural, no preservatives, locally sourced.",
     size: ["4kg"],
-    price: ["₦2,800"],
+    price: ["₦3,000"],
     rating: 4.3,
     images: ["/assets/products/product-delta-garri-white.png"],
     benefits:
       "High energy content, fortified with palm oil for added nutrition.",
   },
-  {
-    id: 4,
-    name: "Roasted Peanuts",
-    category: "Snacks",
-    description:
-      "Dry-roasted, natural, crunchy peanuts, free of additives. 100% natural, no preservatives, locally sourced.",
-    size: ["500g"],
-    price: ["₦1,500"],
-    rating: 4.4,
-    images: ["/assets/products/product-roasted-peanut.png"],
-    benefits:
-      "High in protein and healthy fats, great for snacking and culinary uses.",
-  },
+
 ];
