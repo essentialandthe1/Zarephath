@@ -174,7 +174,7 @@ I'd like to place an order:
 
 Thank you! 🙏`;
 
-    const whatsappUrl = `https://wa.me/08037594488?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/2348037594488?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
   };
 
