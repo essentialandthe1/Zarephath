@@ -18,10 +18,11 @@ export default function HeroSection() {
         with Care.
       </h1>
       <p className="text-gray-700 text-lg lg:text-xl mb-8 max-w-xl">
-        At Pauline’s Food Processing, we bring you premium-quality, locally
-        sourced products — carefully packaged, NAFDAC & FDA approved, and
-        crafted to meet the highest standards.
+        At <span className="text-green-800 font-bold">Zarephath Nigeria Ltd</span> Food Processing,
+        we deliver premium-quality, locally sourced products, carefully-packaged,
+        NAFDAC & FDA approved, and crafted to meet the highest standards.
       </p>
+
       <Button
         onClick={() => (window.location.href = "#products")}
         className="bg-green-700 hover:bg-green-800 text-white px-9 py-6 rounded-full text-sm font-semibold cursor-pointer"

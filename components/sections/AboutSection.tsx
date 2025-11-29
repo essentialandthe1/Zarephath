@@ -61,7 +61,7 @@ const About = () => {
                 <br />
                 Operating from Lagos, Nigeria, Zarephath specializes in the
                 processing and packaging of unripe plantain flour, red palm oil,
-                yellow and white garri, and roasted peanuts—sourced from farmers
+                yellow and white garri from farmers
                 who adhere to sustainable agricultural practices.
               </>
             )}
