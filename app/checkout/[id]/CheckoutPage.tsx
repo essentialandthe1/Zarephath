@@ -1,6 +1,7 @@
 "use client";
+
 import { useSearchParams, useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import CheckoutForm from "./CheckoutForm";
 import ThankYouModal from "./ThankYouModal";
 
@@ -15,10 +16,23 @@ export default function CheckoutPage({ id }: { id: string }) {
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [quantity, setQuantity] = useState(sizeFromQuery);
 
+  // track previous modal state so we only react on close (true -> false)
+  const prevModalRef = useRef<boolean>(false);
+
   useEffect(() => {
     setSelectedProduct(id);
     setQuantity(sizeFromQuery);
   }, [id, sizeFromQuery]);
+
+  // When modal closes (transition from true -> false), redirect to #products
+  useEffect(() => {
+    if (prevModalRef.current && !showThankYouModal) {
+      // navigate to products section (client-side)
+      // using router.push ensures it works within Next.js app router
+      router.push("/#products");
+    }
+    prevModalRef.current = showThankYouModal;
+  }, [showThankYouModal, router]);
 
   const handleGoBack = () => {
     router.back();
