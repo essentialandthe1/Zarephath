@@ -41,8 +41,8 @@ export default function CheckoutForm({
       toast.error("Valid email is required", { style: { backgroundColor: "#ef4444", color: "white" }, icon: <AlertTriangle className="text-white" /> });
       return false;
     }
-    if (phone.trim().length < 10) {
-      toast.error("Phone number must be at least 10 digits", { style: { backgroundColor: "#ef4444", color: "white" }, icon: <AlertTriangle className="text-white" /> });
+    if (phone.trim().length < 9) {
+      toast.error("Phone number must be at least 9 digits", { style: { backgroundColor: "#ef4444", color: "white" }, icon: <AlertTriangle className="text-white" /> });
       return false;
     }
     if (!selectedProduct) {
@@ -76,14 +76,29 @@ export default function CheckoutForm({
         body: JSON.stringify({ fullName, email, phone, selectedProduct, quantity, method, address, notes }),
       });
 
-      if (!res.ok) throw new Error(await res.text());
+      // parse response (attempt JSON first)
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        data = null;
+      }
+
+      if (!res.ok) {
+        // show server-provided error message if available
+        const errMsg = data?.error || data?.message || (await res.text()) || "Order failed";
+        throw new Error(errMsg);
+      }
 
       toast.success("Order submitted successfully!", { style: { backgroundColor: "#22c55e", color: "white" }, icon: <CheckCircle2 className="text-white" /> });
+
+      // Reset form
       setFullName(""); setEmail(""); setPhone(""); setSelectedProduct(""); setQuantity(""); setMethod(""); setAddress(""); setNotes("");
       setShowThankYouModal(true);
     } catch (error) {
       console.error("Order Submission Error:", error);
-      toast.error("Something went wrong while submitting your order", { style: { backgroundColor: "#ef4444", color: "white" }, icon: <AlertTriangle className="text-white" /> });
+      const message = error instanceof Error ? error.message : "Something went wrong while submitting your order";
+      toast.error(message, { style: { backgroundColor: "#ef4444", color: "white" }, icon: <AlertTriangle className="text-white" /> });
     } finally {
       setIsSubmitting(false);
     }
@@ -108,7 +123,13 @@ I'd like to place an order:
 Thank you! 🙏`;
 
     const phoneNumber = "2348037594488";
-    window.location.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+    // Open WhatsApp in new tab and keep user on site
+    window.open(whatsappUrl, "_blank");
+
+    // show modal in current tab so user can Close -> return to products
+    setShowThankYouModal(true);
   };
 
   return (
