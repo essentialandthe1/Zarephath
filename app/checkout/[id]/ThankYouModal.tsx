@@ -14,11 +14,13 @@ import { CheckCircle2 } from "lucide-react";
 interface ThankYouModalProps {
   open: boolean;
   onOpenChange: (value: boolean) => void;
+  onGoBack?: () => void;
 }
 
 export default function ThankYouModal({
   open,
   onOpenChange,
+  onGoBack,
 }: ThankYouModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -33,7 +35,10 @@ export default function ThankYouModal({
         </DialogHeader>
         <DialogFooter className="mt-4">
           <Button
-            onClick={() => onOpenChange(false)}
+            onClick={() => {
+              onOpenChange(false);
+              onGoBack?.();
+            }}
             className="bg-green-700 hover:bg-green-800 text-white w-full"
           >
             Close
