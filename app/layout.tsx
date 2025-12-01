@@ -152,6 +152,7 @@ const orgSchema = {
       </head>
       <body>
         {children}
+         <Toaster />
       </body>
     </html>
   );

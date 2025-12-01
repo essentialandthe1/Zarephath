@@ -58,6 +58,7 @@ export default function CheckoutPage({ id }: { id: string }) {
       <ThankYouModal
         open={showThankYouModal}
         onOpenChange={setShowThankYouModal}
+        onGoBack={handleGoBack}
       />
     </section>
   );
