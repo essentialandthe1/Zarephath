@@ -141,8 +141,19 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
-select,
-select option {
+/* Remove forced blue highlight on Windows/Chrome default selects */
+select {
   background-color: white !important;
-  color: black !important;
+  color: #374151 !important; /* Tailwind gray-700 */
 }
+
+/* Remove weird OS forced styling */
+select::-ms-expand {
+  display: none;
+}
+
+/* Remove highlight color on open */
+select:focus {
+  background-color: white !important;
+}
+

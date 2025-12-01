@@ -168,23 +168,27 @@ Thank you! 🙏`;
         <Input id="address" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Enter your full delivery/shipping address" required />
       </div>
 
-      <div>
+      <div className="relative">
         <Label htmlFor="method" className="pb-2">Preferred Delivery Method</Label>
+
         <select
           id="method"
           value={method}
           onChange={(e) => setMethod(e.target.value)}
-          className="w-full border border-gray-300 rounded-md p-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-gray-300"
+          className="w-full border border-gray-300 rounded-md p-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-gray-300 appearance-none"
           required
         >
-          <option value="" disabled hidden>
-              Select method
-          </option>
-
-            <option value="pickup">Pickup</option>
-            <option value="delivery">Delivery</option>
+          <option value="" disabled hidden>Select method</option>
+          <option value="pickup">Pickup</option>
+          <option value="delivery">Delivery</option>
         </select>
+
+        {/* Custom dropdown arrow */}
+        <div className="pointer-events-none absolute right-3 top-[65%] -translate-y-1/2 text-gray-500">
+          ▼
+        </div>
       </div>
+
 
       <div>
         <Label htmlFor="notes" className="pb-2">Additional Notes (Optional)</Label>
