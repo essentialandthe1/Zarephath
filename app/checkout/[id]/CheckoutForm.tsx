@@ -169,12 +169,21 @@ Thank you! 🙏`;
       </div>
 
       <div>
-        <Label htmlFor="method" className="pb-2">Preferred Delivery Method (Pickup / Delivery)</Label>
-        <Input list="methods" value={method} onChange={(e) => setMethod(e.target.value)} placeholder="Pickup or Delivery" required />
-        <datalist id="methods">
-          <option value="pickup" />
-          <option value="delivery" />
-        </datalist>
+        <Label htmlFor="method" className="pb-2">Preferred Delivery Method</Label>
+        <select
+          id="method"
+          value={method}
+          onChange={(e) => setMethod(e.target.value)}
+          className="w-full border border-gray-300 rounded-md p-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-gray-300"
+          required
+        >
+          <option value="" disabled hidden>
+              Select method
+          </option>
+
+            <option value="pickup">Pickup</option>
+            <option value="delivery">Delivery</option>
+        </select>
       </div>
 
       <div>

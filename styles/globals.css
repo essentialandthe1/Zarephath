@@ -140,3 +140,9 @@ html {
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 }
+
+select,
+select option {
+  background-color: white !important;
+  color: black !important;
+}
