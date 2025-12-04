@@ -52,22 +52,56 @@ export async function POST(req: Request) {
 
     // sending email
     await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: "zarephathfoods07@gmail.com",
-      subject: "New Order Received",
-      html: `
-      <h3>New Order</h3>
-      <ul>
-          <li><strong>Name:</strong> ${fullName}</li>
-          <li><strong>Email:</strong> ${email}</li>
-          <li><strong>Phone:</strong> ${phone}</li>
-          <li><strong>Product:</strong> ${selectedProduct}</li>
-          <li><strong>Quantity:</strong> ${quantity}</li>
-          <li><strong>Method:</strong> ${method}</li>
-          <li><strong>Address:</strong> ${address}</li>
-          <li><strong>Notes:</strong> ${notes}</li>
-        </ul>
-      `,
+      from: "Zarephath Foods <onboarding@resend.dev>",
+      to: "zarephathnigerialimited@gmail.com",
+      subject: `New Order Received - ${fullName}`,
+              html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #22c55e; text-align: center;">🎉 New Order Received!</h2>
+          <div style="background: #f9f9f9; padding: 20px; border-radius: 10px; border-left: 4px solid #22c55e;">
+            <h3 style="color: #333; margin-bottom: 15px;">Order Details:</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold;">👤 Name:</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">${fullName}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold;">📧 Email:</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">${email}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold;">📞 Phone:</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">${phone}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold;">🛒 Product:</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">${selectedProduct}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold;">📦 Quantity:</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">${quantity}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold;">🚚 Method:</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">${method}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold;">📍 Address:</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">${address}</td>
+              </tr>
+              ${notes ? `
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold;">📝 Notes:</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">${notes}</td>
+              </tr>
+              ` : ''}
+            </table>
+          </div>
+          <p style="text-align: center; margin-top: 20px; color: #666;">
+            Order received at: ${new Date().toLocaleString()}
+          </p>
+        </div>
+        `,
     });
 
     return NextResponse.json({ success: true });
